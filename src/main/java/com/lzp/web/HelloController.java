@@ -56,6 +56,7 @@ public class HelloController {
     }
 
 
+
     //验证是否来自微信服务器的消息
     @RequestMapping(value = "core",method = RequestMethod.GET)
     public String checkSignature(String signature  ,

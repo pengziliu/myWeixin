@@ -1,0 +1,8 @@
+1.基础springboot项目搭建
+2.多环境配置文件配置
+3.基础微信API实体封装
+4.加入banner.txt
+5.集成mongodb 并封装dao层
+6.微信基本入口处理类
+7.框架项目包定义
+8.加入devtools 快速开发插件
