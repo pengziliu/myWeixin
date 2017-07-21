@@ -10,6 +10,8 @@ import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.lzp.dao.UserRepository;
+import com.lzp.entity.UserTest;
 import com.lzp.service.CoreService;
 import com.lzp.service.CoreServiceImpl;
 import com.lzp.util.SignUtil;
@@ -30,6 +32,8 @@ public class HelloController {
     private org.slf4j.Logger log = LoggerFactory
             .getLogger(this.getClass());
 
+    @Autowired
+    private UserRepository userRepository;
 
 
     @RequestMapping("/hello")
@@ -37,12 +41,20 @@ public class HelloController {
         return "Hello World";
     }
 
+
+    @RequestMapping("/testSave")
+    public String testSave(String name) {
+        UserTest userTest = new UserTest(1,name,2);
+        userRepository.save(userTest);
+        return   JSONObject.fromObject(userTest).toString();
+    }
+
     //验证是否来自微信服务器的消息
     @RequestMapping(value = "core",method = RequestMethod.GET)
-    public String checkSignature(@RequestParam(name = "signature" ,required = false) String signature  ,
-                                 @RequestParam(name = "nonce",required = false) String  nonce ,
-                                 @RequestParam(name = "timestamp",required = false) String  timestamp ,
-                                 @RequestParam(name = "echostr",required = false) String  echostr){
+    public String checkSignature(String signature  ,
+                                  String  nonce ,
+                                  String  timestamp ,
+                                  String  echostr){
         // 通过检验signature对请求进行校验，若校验成功则原样返回echostr，表示接入成功，否则接入失败
         if (SignUtil.checkSignature(signature, timestamp, nonce)) {
             log.info("接入成功");
