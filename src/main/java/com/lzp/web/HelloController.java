@@ -14,6 +14,7 @@ import com.lzp.dao.UserRepository;
 import com.lzp.entity.UserTest;
 import com.lzp.service.CoreService;
 import com.lzp.service.CoreServiceImpl;
+import com.lzp.service.JsoupGetJavaNewsService;
 import com.lzp.util.SignUtil;
 import net.sf.json.JSONObject;
 import net.sf.json.xml.XMLSerializer;
@@ -35,11 +36,23 @@ public class HelloController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JsoupGetJavaNewsService jsoupGetJavaNewsService;
+
 
     @RequestMapping("/hello")
     public String index() {
         return "Hello World";
     }
+
+
+    @RequestMapping("/getJavaNews")
+    public String getJavaNews() {
+
+        jsoupGetJavaNewsService.getJavaNsws();
+        return "Hello World";
+    }
+
 
 
     @RequestMapping("/testSave")
