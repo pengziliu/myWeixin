@@ -43,11 +43,18 @@ public class HelloController {
 
 
     @RequestMapping("/testSave")
-    public String testSave(String name) {
-        UserTest userTest = new UserTest(1,name,2);
+    public String testSave1s(String name) {
+        log.info(" call testSave11");
+        UserTest userTest = new UserTest(1,name,3);
         userRepository.save(userTest);
-        return   JSONObject.fromObject(userTest).toString();
+        return   JSONObject.fromObject(userRepository.findByName(name)).toString();
     }
+
+    @RequestMapping("/find")
+    public String find(String name) {
+        return   JSONObject.fromObject(userRepository.findByName(name)).toString();
+    }
+
 
     //验证是否来自微信服务器的消息
     @RequestMapping(value = "core",method = RequestMethod.GET)
