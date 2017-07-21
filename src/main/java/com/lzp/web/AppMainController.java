@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HelloController {
+public class AppMainController {
 	
 
     private org.slf4j.Logger log = LoggerFactory
@@ -36,20 +36,11 @@ public class HelloController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private JsoupGetJavaNewsService jsoupGetJavaNewsService;
+
 
 
     @RequestMapping("/hello")
     public String index() {
-        return "Hello World";
-    }
-
-
-    @RequestMapping("/getJavaNews")
-    public String getJavaNews() {
-
-        jsoupGetJavaNewsService.getJavaNsws();
         return "Hello World";
     }
 
@@ -62,7 +53,6 @@ public class HelloController {
         userRepository.save(userTest);
         return   JSONObject.fromObject(userRepository.findByName(name)).toString();
     }
-
     @RequestMapping("/find")
     public String find(String name) {
         return   JSONObject.fromObject(userRepository.findByName(name)).toString();
