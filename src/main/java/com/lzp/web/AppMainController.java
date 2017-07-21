@@ -41,6 +41,7 @@ public class AppMainController {
 
     @RequestMapping("/hello")
     public String index() {
+
         return "Hello World";
     }
 

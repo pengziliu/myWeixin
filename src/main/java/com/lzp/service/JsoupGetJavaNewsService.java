@@ -1,5 +1,7 @@
 package com.lzp.service;
 
+import com.lzp.dao.ArticleModuleRepository;
+import com.lzp.entity.ArticleModule;
 import com.lzp.util.HttpClientUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,6 +25,9 @@ public class JsoupGetJavaNewsService {
     private org.slf4j.Logger logger = LoggerFactory
             .getLogger(this.getClass());
 
+
+    private ArticleModuleRepository articleModuleRepository;
+
     /**
      * 获取远程地址的网页源数据
      * @param remoteUrl
@@ -44,12 +49,16 @@ public class JsoupGetJavaNewsService {
 
 
     public void getJavaNsws(){
+
+        ArticleModule articleModule =  articleModuleRepository.findByName("JAVA");
+
         String result = HttpClientUtils.getContentFromUrl( JAVA_NEWS_URL);
         Document root_document = Jsoup.parse(result);
         Elements list = root_document.select(".line_list");
         Iterator<Element>  iterator =  list.iterator();
         while (iterator.hasNext()){
             Element element = iterator.next();
+            //获取文章模块
             //取5条
             String content = element.getElementsByTag("a").text();
 

@@ -27,6 +27,17 @@ public class Article_ {
     private long clickNum;
     //如果是外链，则这个字段有值
     private String linkUrl;
+    //来源
+    private String from;
+
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
 
     public String getId() {
         return id;
