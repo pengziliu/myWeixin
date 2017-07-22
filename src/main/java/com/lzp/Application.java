@@ -11,7 +11,6 @@ public class Application   {
 	{
 		//System.setProperty("spring.devtools.restart.enabled", "true");
 		SpringApplication.run(Application.class, args);
-
 		System.out.println("==================springboot start==============");
 	}
 

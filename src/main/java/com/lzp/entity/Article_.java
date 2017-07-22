@@ -1,10 +1,12 @@
 package com.lzp.entity;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Created by liuzp on 2017/7/21.
  */
+@Document(collection= "article_")
 public class Article_ {
 
     @Id
@@ -29,9 +31,21 @@ public class Article_ {
     private String linkUrl;
     //来源
     private String from;
+    //标签
+    private String [] tagId;
+    
 
+    
+    
+    public String[] getTagId() {
+		return tagId;
+	}
 
-    public String getFrom() {
+	public void setTagId(String[] tagId) {
+		this.tagId = tagId;
+	}
+
+	public String getFrom() {
         return from;
     }
 

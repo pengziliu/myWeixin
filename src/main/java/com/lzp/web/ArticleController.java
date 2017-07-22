@@ -22,7 +22,8 @@ public class ArticleController {
     @RequestMapping("/getJavaNews")
     public String getJavaNews() {
 
-        jsoupGetJavaNewsService.getJavaNsws();
+        jsoupGetJavaNewsService.getJavaNews();
+        
         return "Hello World";
     }
 
