@@ -1,8 +1,18 @@
 package com.lzp.web;
 
+import com.lzp.bean.Page;
+import com.lzp.dao.ArticleModuleRepository;
+import com.lzp.entity.ArticleModule;
+import com.lzp.service.ArticleService;
 import com.lzp.service.JsoupGetJavaNewsService;
+import com.lzp.util.ParamUtils;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +28,11 @@ public class ArticleController {
     @Autowired
     private JsoupGetJavaNewsService jsoupGetJavaNewsService;
 
+    @Autowired
+    private ArticleService articleService;
+    
+    @Autowired
+    private ArticleModuleRepository articleModuleRepository;
 
     @RequestMapping("/getJavaNews")
     public String getJavaNews() {
@@ -27,6 +42,23 @@ public class ArticleController {
         return "Hello World";
     }
 
+    
+    @RequestMapping("/listArticle")
+    public Page listArticle(Integer pageSize,Integer pageNum,String moduleName ) {
+    	ParamUtils.notNull(moduleName);
+    	ArticleModule articleModule   = articleModuleRepository.findByName(moduleName);
+    	Query query =  new Query(Criteria.where("articleModuleId").is(articleModule.getId()));
+    	Sort sort = new Sort(new Sort.Order(Direction.DESC, "createDate"));
+    	Page page = null;
+    	try {
+			 page =   articleService.lists(query, pageNum, pageSize, sort);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        return page;
+    }
 
 
 }
