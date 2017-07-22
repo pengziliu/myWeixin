@@ -1,0 +1,79 @@
+/**app.wxss**/
+@import 'weui.wxss';
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 100rpx 0;
+  box-sizing: border-box;
+} 
+
+@font-face {font-family: "xinchen";
+  src: url('//at.alicdn.com/t/font_cfo726ith8ouhaor.eot?t=1500109415637'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_cfo726ith8ouhaor.eot?t=1500109415637#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_cfo726ith8ouhaor.woff?t=1500109415637') format('woff'), /* chrome, firefox */
+  url('//at.alicdn.com/t/font_cfo726ith8ouhaor.ttf?t=1500109415637') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_cfo726ith8ouhaor.svg?t=1500109415637#xinchen') format('svg'); /* iOS 4.1- */
+}
+
+.xinchen {
+  font-family:"xinchen" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-ditu:before { content: "\e640"; }
+
+.icon-a900:before { content: "\e690"; }
+
+.icon-shijian:before { content: "\e65c"; }
+
+.icon-chongwu:before { content: "\e600"; }
+
+.icon-dianhua:before { content: "\e784"; }
+
+.icon-tupian:before { content: "\e62b"; }
+
+.icon-computer:before { content: "\e6bc"; }
+
+.icon-shop:before { content: "\e6c6"; }
+
+.icon-camera:before { content: "\e6ca"; }
+
+.icon-game:before { content: "\e6cc"; }
+
+.icon-chat:before { content: "\e6ce"; }
+
+.icon-phone:before { content: "\e6d0"; }
+
+.icon-jiaoyou:before { content: "\e60e"; }
+
+.icon-academic_cap:before { content: "\e604"; }
+
+.icon-book:before { content: "\e608"; }
+
+.icon-heart:before { content: "\e613"; }
+
+.icon-desktop:before { content: "\e616"; }
+
+.icon-link:before { content: "\e62a"; }
+
+.icon-star:before { content: "\e63f"; }
+
+
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  box-sizing: border-box;
+  font-family: "微软雅黑"
+} 

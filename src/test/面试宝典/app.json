@@ -1,0 +1,48 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/web/web",
+    "pages/dayList/dayList",
+    "pages/contact/contact",
+    "pages/detail/detail",
+    "pages/basic/basic"
+
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#2694d2",
+    "navigationBarTitleText": "首页",
+    "navigationBarTextStyle": "#fff"
+  },
+  "tabBar": {
+    "backgroundColor":"#2694d2",
+    "color":"#fff",
+    "borderStyle":"#2694d2",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "试题库",
+        "iconPath": "images/index.png",
+        "selectedIconPath": "images/index.png"
+      },
+      {
+        "pagePath": "pages/dayList/dayList",
+        "text": "每日更新",
+        "iconPath": "images/software.png",
+        "selectedIconPath": "images/software.png"
+      },
+      {
+        "pagePath": "pages/show/show",
+        "text": "吐槽交流",
+        "iconPath": "images/show.png",
+        "selectedIconPath": "images/show.png"
+      },
+      {
+        "pagePath": "pages/contact/contact",
+        "text": "我来填题",
+        "iconPath": "images/contact.png",
+        "selectedIconPath": "images/contact.png"
+      }
+    ]
+  }
+}

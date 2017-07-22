@@ -1,0 +1,52 @@
+
+.index{
+  line-height: 70rpx;
+  background: #eae8e8;
+  min-height: 100vh;
+}
+.index-swiper image{
+  width:100%;
+ 
+}
+
+.index-list .list-in{
+  box-sizing: border-box;
+  height: 240rpx;
+  margin-bottom: 20rpx;
+  padding:20rpx 25rpx;
+  font-family: "微软雅黑";
+  background: #fff;
+}
+
+.index-list .list-in .list-in-left{
+  width:200rpx;
+  height: 150rpx;
+  float: left;
+}
+.index-list .list-in .list-in-left image{
+  width:100%;
+}
+
+.from{
+   float: right;
+}
+.author{
+   float: left;
+}
+
+.index-list .list-in .list-in-right{
+  width:475rpx;
+  padding-left:25rpx;
+  float: left;
+}
+.index-list .list-in .list-in-right .title{
+  font-size: 28rpx;
+  line-height: 50rpx;
+  margin-bottom: 10rpx;
+}
+
+.index-list .list-in .list-in-right .detail{
+  font-size: 22rpx;
+  color:#6A6A6A;
+  line-height: 32rpx;
+}

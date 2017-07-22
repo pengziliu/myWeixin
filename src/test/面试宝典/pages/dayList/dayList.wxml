@@ -1,0 +1,43 @@
+<view class="index">
+  <swiper class="index-swiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{imgUrls}}" wx:for-item="item" wx:key="*this">
+      <swiper-item>
+        <image src="/images/banner.png" class="slide-image" mode="widthFix" />
+
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="tools">
+
+  </view>
+
+
+
+  <view class="index-list" wx:for="{{listData}}" wx:key="item">
+
+<navigator url="../basic/basic?id={{item.id}}">
+    <view class="list-in">
+
+      <view class="list-in-right">
+
+        <view class="title">
+          {{item.title}}
+        </view>
+        <view class="detail">
+          <span class="author">
+           作者:{{item.author}}
+          </span>
+          <span class="from">
+            来源:{{item.from}}
+         </span>
+
+        </view>
+      </view>
+
+    </view>
+    </navigator>
+  </view>
+
+
+
+</view>
