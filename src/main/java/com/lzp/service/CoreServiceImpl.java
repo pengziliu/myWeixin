@@ -7,9 +7,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.lzp.bean.Page;
 import com.lzp.bean.Weather;
+import com.lzp.entity.Article_;
 import com.lzp.message.model.Article;
 import com.lzp.message.model.Music;
+import com.lzp.message.req.ImageMessage;
 import com.lzp.message.resp.MusicMessage;
 import com.lzp.message.resp.NewsMessage;
 import com.lzp.message.resp.TextMessage;
@@ -18,18 +21,31 @@ import com.lzp.util.GetFreeVPNUtil;
 import com.lzp.util.MessageUtil;
 import com.lzp.util.WXUtil;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 
 /**
  * 核心处理类
  *
- * @author Administrator
- *
  */
+@Service
 public class CoreServiceImpl implements CoreService {
 
     private org.slf4j.Logger log = LoggerFactory
             .getLogger(this.getClass());
+    
+    @Autowired
+    private ArticleService articleService;
+    
+    @Value("{studyPic}")
+    private String studyPic;//我要学习 图片
+    
+    @Value("{smallAppPic}")
+    private String smallAppPic; //小程序图片
+    
+    
     /**
      * 处理微信发来的请求
      *
@@ -62,7 +78,7 @@ public class CoreServiceImpl implements CoreService {
         //    textMessage.setContent("功能正在开发中，请使用说明书");//
             respMessage = MessageUtil.messageToXml(textMessage);
            //  默认回复主菜单，回复错误时回复主菜单
-             textMessage.setContent("请求处理出错，系统自动返回主菜单 \n" + mainMenu());
+             textMessage.setContent("系统主菜单 \n" + mainMenu());
              //将文本消息对象转换成xml字符串
              respMessage = MessageUtil.messageToXml(textMessage);
 
@@ -71,10 +87,16 @@ public class CoreServiceImpl implements CoreService {
 				String content = requestMap.get("Content").trim();
 				if("面试".equals(content.trim())){
 					textMessage.setContent("请在公众号主体信息里面进入小程序'程序员面试宝典',找工作就靠它了!");
-					respMessage = MessageUtil.messageToXml(textMessage);
-				}else if("3".equals(content.trim())){
-					//从数据库获取最新的三篇文章
-
+					ImageMessage imageMessage = new ImageMessage();
+					imageMessage.setPicUrl(smallAppPic);
+					imageMessage.setMsgType(MessageUtil.REQ_MESSAGE_TYPE_IMAGE);
+					imageMessage.setFromUserName(toUserName);
+					imageMessage.setCreateTime(new Date().getTime());
+					imageMessage.setToUserName(fromUserName);
+					respMessage = MessageUtil.messageToXml(imageMessage);
+				}else if("我要学习".equals(content.trim())){
+					//从数据库获取最新的5篇文章
+					respMessage = study(respMessage, fromUserName, toUserName);
 				}
 			}
 			// 图片消息
@@ -118,7 +140,7 @@ public class CoreServiceImpl implements CoreService {
 				// 关注
 				if (eventType.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {
 					textMessage
-							.setContent("亲，想你了，怎么现在才来呢？进击的程序猿是您学习娱乐的好帮手！\n\n 回复'0'进入主菜单,赶紧来体验吧,保证不会让您失望噢！！O(∩_∩)O~~");
+							.setContent("亲，想你了，怎么现在才来呢？");
 					respMessage = MessageUtil.messageToXml(textMessage);
 				}
 				// 取消关注
@@ -147,13 +169,45 @@ public class CoreServiceImpl implements CoreService {
         return respMessage;
     }
 
+    /**
+     * 我要学习
+     * @param respMessage
+     * @param fromUserName
+     * @param toUserName
+     * @return
+     */
+	private String study(String respMessage, String fromUserName, String toUserName) {
+		Page page  = articleService.listArticle(5, 1, "JAVA");
+		List<Article_> list = (List<Article_>) page.getListData();
+		if(list!=null){
+			NewsMessage newsMessage = new NewsMessage();
+			newsMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
+			newsMessage.setFromUserName(toUserName);
+			newsMessage.setCreateTime(new Date().getTime());
+			newsMessage.setFuncFlag(0);
+			newsMessage.setToUserName(fromUserName);
+			List<Article> listArticle = new ArrayList<Article>();
+			for(Article_ a: list){
+				Article article = new Article();
+				article.setTitle(a.getTitle());
+				article.setDescription(a.getFrom());
+				article.setUrl(a.getLinkUrl());
+				article.setPicUrl(studyPic);
+				listArticle.add(article);
+			}
+			newsMessage.setArticleCount(listArticle.size());
+			newsMessage.setArticles(listArticle);
+			respMessage = MessageUtil.messageToXml(newsMessage);
+		}
+		return respMessage;
+	}
+
     // 主菜单
     private static String mainMenu() {
         StringBuffer buffer = new StringBuffer();
         buffer.append("目前本订阅号开通的功能如下：").append("\n");
         buffer.append("1.发送图片即可图片人脸识别").append("\n");
-        buffer.append("2.回复'面试'为你职业晋级加油鼓劲").append("\n");
-        buffer.append("3.回复'3'为你推送最新文章").append("\n");
+        buffer.append("2.回复'学习'为你推送最新JAVA技术文章（每天实时更新）").append("\n");
         return buffer.toString();
     }
 

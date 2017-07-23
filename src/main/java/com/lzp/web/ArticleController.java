@@ -55,18 +55,8 @@ public class ArticleController {
     @RequestMapping("/listArticle")
     public Page listArticle(Integer pageSize,Integer pageNum,String moduleName ) {
     	ParamUtils.notNull(moduleName);
-    	ArticleModule articleModule   = articleModuleRepository.findByName(moduleName);
-    	Query query =  new Query(Criteria.where("articleModuleId").is(articleModule.getId()));
-    	Sort sort = new Sort(new Sort.Order(Direction.DESC, "createDate"));
-    	Page page = null;
-    	try {
-			 page =   articleService.lists(query, pageNum, pageSize, sort);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	return articleService.listArticle(pageSize,pageNum,moduleName);
         
-        return page;
     }
     /**
      * 根据唯一索引获取文章

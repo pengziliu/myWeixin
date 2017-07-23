@@ -1,29 +1,13 @@
 package com.lzp.web;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.lzp.dao.UserRepository;
-import com.lzp.entity.UserTest;
 import com.lzp.service.CoreService;
-import com.lzp.service.CoreServiceImpl;
-import com.lzp.service.JsoupGetJavaNewsService;
 import com.lzp.util.SignUtil;
-import net.sf.json.JSONObject;
-import net.sf.json.xml.XMLSerializer;
-
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -33,9 +17,9 @@ public class AppMainController {
     private org.slf4j.Logger log = LoggerFactory
             .getLogger(this.getClass());
 
-    @Autowired
-    private UserRepository userRepository;
 
+    @Autowired
+    private CoreService coreService ;
 
 
 
@@ -44,22 +28,6 @@ public class AppMainController {
 
         return "Hello World";
     }
-
-
-
-    @RequestMapping("/testSave")
-    public String testSave1s(String name) {
-        log.info(" call testSave11");
-        UserTest userTest = new UserTest(1,name,3);
-        userRepository.save(userTest);
-        return   JSONObject.fromObject(userRepository.findByName(name)).toString();
-    }
-    @RequestMapping("/find")
-    public String find(String name) {
-        return   JSONObject.fromObject(userRepository.findByName(name)).toString();
-    }
-
-
 
     //验证是否来自微信服务器的消息
     @RequestMapping(value = "core",method = RequestMethod.GET)
@@ -78,10 +46,7 @@ public class AppMainController {
     // 调用核心业务类接收消息、处理消息跟推送消息
     @RequestMapping(value = "core",method = RequestMethod.POST)
     public  String post(HttpServletRequest req){
-        CoreService coreService = new CoreServiceImpl();
-
-        String respMessage = coreService.processRequest(req);
-        return respMessage;
+        return coreService.processRequest(req);
     }
     
 
