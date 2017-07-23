@@ -137,18 +137,21 @@ public class JsoupGetJavaNewsService {
 		article_.setLinkType(linkType);
 		article_.setLinkUrl(linkUrl);
 		article_.setTagId(tagList.toArray(new String[tagList.size()]));
-		if(linkUrl.indexOf("blog.csdn.net")!=-1){
-			//如果是csdn的文章 根据链接将内容也爬过来
-			article_.setLinkType(false);
-			 String content = getCsdnArticleContentByUrl(linkUrl);
-		}
+//		if(linkUrl.indexOf("blog.csdn.net")!=-1){
+//			//如果是csdn的文章 根据链接将内容也爬过来
+//			article_.setLinkType(false);
+//			 String content = getCsdnArticleContentByUrl(linkUrl);
+//		}
 		articleRepository.save(article_);
 		return article_;
 	}
 
-	private String getCsdnArticleContentByUrl(String linkUrl) {
-		 String result = HttpClientUtils.getContentFromUrl( linkUrl);
-		
+	private String getMSContent(String MS_BLOG_URL) {
+		 String result = HttpClientUtils.getContentFromUrl( MS_BLOG_URL);
+		 Document root_document = Jsoup.parse(result);
+		 
+		 
+		 
 		return null;
 	}
 

@@ -89,12 +89,12 @@ public class CoreServiceImpl implements CoreService {
 					//发送小程序二维码
 					ImageMessage imageMessage = new ImageMessage();
 					imageMessage.setPicUrl(smallAppPic);
-					imageMessage.setMsgType(MessageUtil.REQ_MESSAGE_TYPE_IMAGE);
+					imageMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_IMAGE);
 					imageMessage.setFromUserName(toUserName);
 					imageMessage.setCreateTime(new Date().getTime());
 					imageMessage.setToUserName(fromUserName);
 					respMessage = MessageUtil.messageToXml(imageMessage);
-				}else if("我要学习".equals(content.trim())){
+				}else if("技术".equals(content.trim())){
 					//从数据库获取最新的5篇文章
 					respMessage = study(respMessage, fromUserName, toUserName);
 				}
@@ -111,13 +111,13 @@ public class CoreServiceImpl implements CoreService {
 			// 语音消息
 			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
 				// 语音消息文件的标识
-				String mediaId = requestMap.get("MediaId");
-				// 语音格式：amr
-				String format = requestMap.get("Format");
-				// 语音识别结果
-				String recognition = requestMap.get("Recognition");
-				textMessage.setContent("您发送的是语音消息！\n 消息内容为：" + recognition);
-				respMessage = MessageUtil.messageToXml(textMessage);
+//				String mediaId = requestMap.get("MediaId");
+//				// 语音格式：amr
+//				String format = requestMap.get("Format");
+//				// 语音识别结果
+//				String recognition = requestMap.get("Recognition");
+//				textMessage.setContent("您发送的是语音消息！\n 消息内容为：" + recognition);
+//				respMessage = MessageUtil.messageToXml(textMessage);
 			}
 			// 视频消息
 			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VIDEO)) {
@@ -207,7 +207,7 @@ public class CoreServiceImpl implements CoreService {
         StringBuffer buffer = new StringBuffer();
         buffer.append("目前本订阅号开通的功能如下：").append("\n");
         buffer.append("1.发送图片即可图片人脸识别").append("\n");
-        buffer.append("2.回复'学习'为你推送最新JAVA技术文章（每天实时更新）").append("\n");
+        buffer.append("2.回复'技术'为你推送最新JAVA技术文章（每天实时更新）").append("\n");
         return buffer.toString();
     }
 
