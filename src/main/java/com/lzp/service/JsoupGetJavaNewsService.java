@@ -33,6 +33,8 @@ public class JsoupGetJavaNewsService {
 
     private org.slf4j.Logger logger = LoggerFactory
             .getLogger(this.getClass());
+    
+    private final String MS_BLOG_URL="http://blog.csdn.net/u013110200/article/details/55517717";
 
     @Autowired
     private ArticleModuleRepository articleModuleRepository;

@@ -86,7 +86,7 @@ public class CoreServiceImpl implements CoreService {
 			if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
 				String content = requestMap.get("Content").trim();
 				if("面试".equals(content.trim())){
-					textMessage.setContent("请在公众号主体信息里面进入小程序'程序员面试宝典',找工作就靠它了!");
+					//发送小程序二维码
 					ImageMessage imageMessage = new ImageMessage();
 					imageMessage.setPicUrl(smallAppPic);
 					imageMessage.setMsgType(MessageUtil.REQ_MESSAGE_TYPE_IMAGE);
