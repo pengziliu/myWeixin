@@ -86,18 +86,7 @@ public class CoreServiceImpl implements CoreService {
 			// 文本消息
 			if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
 				String content = requestMap.get("Content").trim();
-				if("面试".equals(content.trim())){
-					//发送小程序二维码
-					ImageMessage imageMessage = new ImageMessage();
-					//imageMessage.setPicUrl(smallAppPic);
-					imageMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_IMAGE);
-					imageMessage.setFromUserName(toUserName);
-					imageMessage.setCreateTime(new Date().getTime());
-					imageMessage.setToUserName(fromUserName);
-					imageMessage.setImage(new Image(smallAppPic));
-					respMessage = MessageUtil.messageToXml(imageMessage);
-					log.info("news - respMessage={}",respMessage);
-				}else if("技术".equals(content.trim())){
+				if("技术".equals(content.trim())){
 					//从数据库获取最新的5篇文章
 					respMessage = study(respMessage, fromUserName, toUserName);
 				}
