@@ -1,7 +1,6 @@
 package com.lzp.util;
 
 import com.lzp.message.model.Article;
-import com.lzp.message.req.ImageMessage;
 import com.lzp.message.resp.*;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;

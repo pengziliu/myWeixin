@@ -146,6 +146,11 @@ public class JsoupGetJavaNewsService {
 		return article_;
 	}
 
+	/**
+	 * 从别人的博客爬取面试题和答案并存到数据库
+	 * @param MS_BLOG_URL
+	 * @return
+	 */
 	private String getMSContent(String MS_BLOG_URL) {
 		 String result = HttpClientUtils.getContentFromUrl( MS_BLOG_URL);
 		 Document root_document = Jsoup.parse(result);

@@ -11,15 +11,16 @@ import com.lzp.bean.Page;
 import com.lzp.bean.Weather;
 import com.lzp.entity.Article_;
 import com.lzp.message.model.Article;
+import com.lzp.message.model.Image;
 import com.lzp.message.model.Music;
-import com.lzp.message.req.ImageMessage;
+import com.lzp.message.resp.ImageMessage;
 import com.lzp.message.resp.MusicMessage;
 import com.lzp.message.resp.NewsMessage;
 import com.lzp.message.resp.TextMessage;
 import com.lzp.service.CoreService;
-import com.lzp.util.GetFreeVPNUtil;
 import com.lzp.util.MessageUtil;
-import com.lzp.util.WXUtil;
+
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,10 +40,10 @@ public class CoreServiceImpl implements CoreService {
     @Autowired
     private ArticleService articleService;
     
-    @Value("{studyPic}")
+    @Value("${studyPic}")
     private String studyPic;//我要学习 图片
     
-    @Value("{smallAppPic}")
+    @Value("${smallAppPic}")
     private String smallAppPic; //小程序图片
     
     
@@ -88,12 +89,14 @@ public class CoreServiceImpl implements CoreService {
 				if("面试".equals(content.trim())){
 					//发送小程序二维码
 					ImageMessage imageMessage = new ImageMessage();
-					imageMessage.setPicUrl(smallAppPic);
+					//imageMessage.setPicUrl(smallAppPic);
 					imageMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_IMAGE);
 					imageMessage.setFromUserName(toUserName);
 					imageMessage.setCreateTime(new Date().getTime());
 					imageMessage.setToUserName(fromUserName);
+					imageMessage.setImage(new Image(smallAppPic));
 					respMessage = MessageUtil.messageToXml(imageMessage);
+					log.info("news - respMessage={}",respMessage);
 				}else if("技术".equals(content.trim())){
 					//从数据库获取最新的5篇文章
 					respMessage = study(respMessage, fromUserName, toUserName);
@@ -101,6 +104,8 @@ public class CoreServiceImpl implements CoreService {
 			}
 			// 图片消息
 			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {
+				String mediaId = requestMap.get("MediaId");
+				log.info("图片mediaId={}",mediaId);
 				// 取得图片地址
 				String picUrl = requestMap.get("PicUrl");
 				// 人脸检测
@@ -198,6 +203,7 @@ public class CoreServiceImpl implements CoreService {
 			newsMessage.setArticleCount(listArticle.size());
 			newsMessage.setArticles(listArticle);
 			respMessage = MessageUtil.messageToXml(newsMessage);
+			log.info("news - respMessage={}",respMessage);
 		}
 		return respMessage;
 	}
