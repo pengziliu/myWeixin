@@ -18,5 +18,11 @@ https://my.oschina.net/geekidentity/blog/872888
 	角色表(用户所拥有的角色),
     权限表(角色所涉及到的权限),
     用户-角色表(用户和角色是多对多的),
-    角色-权限表(角色和权限是多对多的).表结构可见实体 	
- 
+    角色-权限表(角色和权限是多对多的).表结构可见实体
+
+
+
+14 加入Swagger 模块
+   jar包依赖见maven
+   配置类见Swagger2.java
+   访问地址 ：http://localhost:8081/weixin/swagger-ui.html
