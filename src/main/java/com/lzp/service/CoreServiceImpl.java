@@ -172,9 +172,8 @@ public class CoreServiceImpl implements CoreService {
      * @return
      */
 	private String study(String respMessage, String fromUserName, String toUserName) {
-		Random random = new Random(3);
 		
-		Page page  = articleService.listArticle(5, random.nextInt()+1, "JAVA");
+		Page page  = articleService.listArticle(5, 1, "JAVA");
 		List<Article_> list = (List<Article_>) page.getListData();
 		if(list!=null){
 			NewsMessage newsMessage = new NewsMessage();
