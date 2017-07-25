@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -171,7 +172,9 @@ public class CoreServiceImpl implements CoreService {
      * @return
      */
 	private String study(String respMessage, String fromUserName, String toUserName) {
-		Page page  = articleService.listArticle(5, 1, "JAVA");
+		Random random = new Random(3);
+		
+		Page page  = articleService.listArticle(5, random.nextInt()+1, "JAVA");
 		List<Article_> list = (List<Article_>) page.getListData();
 		if(list!=null){
 			NewsMessage newsMessage = new NewsMessage();
@@ -202,7 +205,7 @@ public class CoreServiceImpl implements CoreService {
         StringBuffer buffer = new StringBuffer();
         buffer.append("目前本订阅号开通的功能如下：").append("\n");
         buffer.append("1.发送图片即可图片人脸识别").append("\n");
-        buffer.append("2.回复'技术'为你推送最新JAVA技术文章（每天实时更新）").append("\n");
+        buffer.append("2.回复'技术'为你推送最新JAVA技术文章（每天实时更新,每次回复有可能不一样哦）").append("\n");
         return buffer.toString();
     }
 

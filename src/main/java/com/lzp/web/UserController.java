@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.lzp.entity.User;
 
-@Controller
+//@Controller
 public class UserController {
 
 	private org.slf4j.Logger log = LoggerFactory.getLogger(this.getClass());

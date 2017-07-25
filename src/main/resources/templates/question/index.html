@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>面试题录入简易系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+	<form action="/weixin/question/save"  enctype='application/json'   method="post" >
+		问题：<input name="title"  />
+		类别:<select name="type">
+				<option value="JAVA">java</option>
+			 </select>
+		答案:<textarea rows="30" cols="20" name="answer" ></textarea>
+		
+		<button type="submit" >提交</button>
+		<button type="reset"></button>
+	
+	</form>
+
+	<table>
+		<tr>
+			<td>id</td><td>标题</td><td>答案</td><td>操作</td>
+		</tr>
+	<tr th:each="a : ${alist}">
+	    <td th:text="${a.id}" ></td>
+	    <td th:text="${a.title}" ></td>
+	    <td th:text="${a.answer}" ></td>
+	    <td><a th:href="'/weixin/question/delete?id=' + ${a.id}">删除</a></td>
+	</tr>
+		
+	</table>
+
+
+
+</body>
+</html>

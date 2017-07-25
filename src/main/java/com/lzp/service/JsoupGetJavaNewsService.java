@@ -151,7 +151,7 @@ public class JsoupGetJavaNewsService {
 	 * @param MS_BLOG_URL
 	 * @return
 	 */
-	private String getMSContent(String MS_BLOG_URL) {
+	public  String getMSContent() {
 		 String result = HttpClientUtils.getContentFromUrl( MS_BLOG_URL);
 		 Document root_document = Jsoup.parse(result);
 		 Elements elist= root_document.select("div #article_content");

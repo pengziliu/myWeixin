@@ -1,7 +1,10 @@
 package com.lzp.config;
 
 import com.lzp.dao.ArticleModuleRepository;
+import com.lzp.dao.QuestionsRepositoty;
 import com.lzp.entity.ArticleModule;
+import com.lzp.service.JsoupGetJavaNewsService;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,7 +21,13 @@ public class InitData implements CommandLineRunner {
 
     @Autowired
     private ArticleModuleRepository articleModuleRepository;
+    
+    @Autowired
+    private QuestionsRepositoty questionsRepositoty;
 
+    @Autowired
+    private JsoupGetJavaNewsService jsoupGetJavaNewsService;
+    
     @Override
     public void run(String... strings) throws Exception {
 
@@ -28,6 +37,10 @@ public class InitData implements CommandLineRunner {
             articleModule = new ArticleModule();
             articleModule.setName("JAVA");
             articleModuleRepository.save(articleModule);
+        }
+        if(questionsRepositoty.count()==0){
+        	//开始从网站爬取出java面试题并插入数据库
+        	jsoupGetJavaNewsService.getMSContent();
         }
 
 

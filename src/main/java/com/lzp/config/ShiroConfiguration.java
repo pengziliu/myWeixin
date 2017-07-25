@@ -11,10 +11,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.lzp.shiro.AuthRealm;
-import com.lzp.shiro.CredentialsMatcher;
 
-@Configuration
+//@Configuration
 public class ShiroConfiguration {
    /* @Bean(name="shiroFilter")
     public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") SecurityManager manager) {

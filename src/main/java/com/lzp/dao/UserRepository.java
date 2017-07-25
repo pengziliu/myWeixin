@@ -7,7 +7,8 @@ import com.lzp.entity.User;
 /**
  * Created by liuzp on 2017/7/21.
  */
-public interface UserRepository extends MongoRepository<User, String> {
+public interface UserRepository {
+//extends MongoRepository<User, String> {
 
 	User findByName(String name);
 }
