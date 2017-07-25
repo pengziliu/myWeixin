@@ -1,12 +1,9 @@
 package com.lzp.exception;
 
-import javax.servlet.http.HttpServletResponse;
-
+import com.lzp.bean.MyExceptionResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.lzp.bean.MyExceptionResponse;
 
 @ControllerAdvice
  public class GlobalExceptionHandler {
@@ -14,7 +11,7 @@ import com.lzp.bean.MyExceptionResponse;
 	
      @ExceptionHandler(value =  NullParamException.class)
      @ResponseBody
-     public MyExceptionResponse exceptionHandler(NullParamException e, HttpServletResponse response) {
+     public MyExceptionResponse exceptionHandler() {
          MyExceptionResponse resp = new MyExceptionResponse();
          resp.setCode(101);
          resp.setMsg("参数为空");
