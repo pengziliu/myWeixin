@@ -1,7 +1,5 @@
 package com.lzp.web;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -11,9 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.lzp.entity.User;
+import javax.servlet.http.HttpSession;
 
-//@Controller
+@Controller
 public class UserController {
 
 	private org.slf4j.Logger log = LoggerFactory.getLogger(this.getClass());
@@ -30,7 +28,8 @@ public class UserController {
 	}
 
 	@RequestMapping("/login")
-	public String login() {
+	public String login(Model model) {
+
 		return "login";
 	}
 
@@ -40,8 +39,8 @@ public class UserController {
 		Subject subject = SecurityUtils.getSubject();
 		try {
 			subject.login(usernamePasswordToken); // 完成登录
-			User user = (User) subject.getPrincipal();
-			session.setAttribute("user", user);
+//			User user = (User) subject.getPrincipal();
+//			session.setAttribute("user", user);
 			return "index";
 		} catch (Exception e) {
 			return "login";// 返回登录页面
@@ -49,8 +48,8 @@ public class UserController {
 
 	}
 
-	@RequestMapping("/logOut")
-	public String logOut(HttpSession session) {
+	@RequestMapping(value="logout",method =RequestMethod.GET)
+	public String logOut() {
 		Subject subject = SecurityUtils.getSubject();
 		subject.logout();
 		// session.removeAttribute("user");

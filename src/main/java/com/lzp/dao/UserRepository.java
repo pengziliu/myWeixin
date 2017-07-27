@@ -1,14 +1,12 @@
 package com.lzp.dao;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
-
 import com.lzp.entity.User;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
  * Created by liuzp on 2017/7/21.
  */
-public interface UserRepository {
-//extends MongoRepository<User, String> {
+public interface UserRepository extends MongoRepository<User, String> {
 
-	User findByName(String name);
+	User findByUserName(String name);
 }

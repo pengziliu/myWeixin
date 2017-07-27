@@ -9,6 +9,15 @@
 
 
 <p th:text="欢迎登陆本系统" ></p>
+
+    <form action="/weixin/loginUser"  enctype='application/json'  method="post">
+        用户名：<input name="userName" /><br/>
+        密码: <input name="passwd" /><br/>
+        <button type="submit">登录</button>
+    </form>
+
+
+
 </body>
 
 </html>

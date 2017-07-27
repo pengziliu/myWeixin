@@ -14,6 +14,16 @@ public class Role {
 
     private String permission;
 
+    private String desc;//miaoshu
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
     public String getId() {
         return id;
     }
