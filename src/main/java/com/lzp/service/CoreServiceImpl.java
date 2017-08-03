@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.lzp.bean.Page;
 import com.lzp.bean.Weather;
+import com.lzp.dao.ArticleRepository;
 import com.lzp.entity.Article_;
 import com.lzp.message.model.Article;
 import com.lzp.message.model.Image;
@@ -46,6 +47,9 @@ public class CoreServiceImpl implements CoreService {
     
     @Value("${smallAppPic}")
     private String smallAppPic; //小程序图片
+    
+    @Autowired
+    private ArticleRepository articleRepository;
     
     
     /**
@@ -90,6 +94,8 @@ public class CoreServiceImpl implements CoreService {
 				if("技术".equals(content.trim())){
 					//从数据库获取最新的5篇文章
 					respMessage = study(respMessage, fromUserName, toUserName);
+				}else if("我要".equals(content.trim())){
+					respMessage = iwant(textMessage,respMessage, fromUserName, toUserName);
 				}
 			}
 			// 图片消息
@@ -164,7 +170,26 @@ public class CoreServiceImpl implements CoreService {
         return respMessage;
     }
 
-    /**
+    private String iwant(TextMessage textMessage,String respMessage, String fromUserName, String toUserName) {
+		// TODO Auto-generated method stub
+    	List<Article_> list =  articleRepository.findAll();
+    	
+    	StringBuffer buffer = new StringBuffer();
+        buffer.append("别叫的这么大声，要就都给你").append("\n");
+        for(Article_ a:list){
+        	buffer.append("<a href'"+a.getLinkUrl()+"'"+a.getTitle()).append("</a>\n");
+        }
+        buffer.append("每天都在更新，请保持持续关注").append("\n");
+        textMessage.setContent(buffer.toString());
+        
+    	respMessage = MessageUtil.messageToXml(textMessage);
+    	
+    	
+    	
+		return respMessage;
+	}
+
+	/**
      * 我要学习
      * @param respMessage
      * @param fromUserName
@@ -173,7 +198,20 @@ public class CoreServiceImpl implements CoreService {
      */
 	private String study(String respMessage, String fromUserName, String toUserName) {
 		
-		Page page  = articleService.listArticle(5, 1, "JAVA");
+		long total =  articleRepository.count();
+		
+		long pageCount = total % 8 == 0 ? total / 8 : total / 8 + 1;
+		
+		log.info("总分章数:{},一共{}页",total,pageCount);
+		
+		int max=(int) pageCount;
+		int min=1;
+        Random random = new Random();
+
+        int randomPageNum = random.nextInt(max)%(max-min+1) + min;
+		
+		
+		Page page  = articleService.listArticle(8, randomPageNum, "JAVA");
 		List<Article_> list = (List<Article_>) page.getListData();
 		if(list!=null){
 			NewsMessage newsMessage = new NewsMessage();
@@ -183,13 +221,15 @@ public class CoreServiceImpl implements CoreService {
 			newsMessage.setFuncFlag(0);
 			newsMessage.setToUserName(fromUserName);
 			List<Article> listArticle = new ArrayList<Article>();
+			int c= 0;
 			for(Article_ a: list){
 				Article article = new Article();
-				article.setTitle(a.getTitle());
+				article.setTitle(c==0?"【随机到第"+randomPageNum+"页】" + a.getTitle():a.getTitle());
 				article.setDescription(a.getFrom());
 				article.setUrl(a.getLinkUrl());
 				article.setPicUrl(studyPic);
 				listArticle.add(article);
+				c++;
 			}
 			newsMessage.setArticleCount(listArticle.size());
 			newsMessage.setArticles(listArticle);
@@ -204,7 +244,7 @@ public class CoreServiceImpl implements CoreService {
         StringBuffer buffer = new StringBuffer();
         buffer.append("目前本订阅号开通的功能如下：").append("\n");
         buffer.append("1.发送图片即可图片人脸识别").append("\n");
-        buffer.append("2.回复'技术'为你推送最新JAVA技术文章（每天实时更新,每次回复有可能不一样哦）").append("\n");
+        buffer.append("2.回复'技术'为你推送最新JAVA技术文章（每天实时更新,每次回复有可能不一样哦【随机页数】）").append("\n");
         return buffer.toString();
     }
 

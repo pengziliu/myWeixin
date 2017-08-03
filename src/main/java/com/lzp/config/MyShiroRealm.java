@@ -41,7 +41,7 @@ import java.util.Set;
 
  *
  */
-@Component
+//@Component
 public class MyShiroRealm extends AuthorizingRealm {
 
     @Autowired
