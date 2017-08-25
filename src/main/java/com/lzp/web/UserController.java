@@ -1,9 +1,11 @@
 package com.lzp.web;
 
+import com.lzp.service.ArticleService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,8 @@ public class UserController {
 
 	private org.slf4j.Logger log = LoggerFactory.getLogger(this.getClass());
 
+	@Autowired
+	private ArticleService articleService;
 	/**
 	 * 测试页面跳转和thymleaf取值
 	 * 
@@ -29,8 +33,14 @@ public class UserController {
 
 	@RequestMapping("/login")
 	public String login(Model model) {
-
 		return "login";
+	}
+
+
+	@RequestMapping("/article")
+	public String article(Model model,Integer pageSize,Integer pageNum,String moduleName ) {
+		model.addAttribute("page", articleService.listArticle(pageSize,pageNum,moduleName));
+		return "article";
 	}
 
 	@RequestMapping("/loginUser")
